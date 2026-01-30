@@ -14,3 +14,5 @@ data/
 datasets/
 outputs/
 models/
+!data/tracked/
+*.zip

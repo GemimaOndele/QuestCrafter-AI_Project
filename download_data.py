@@ -48,6 +48,20 @@ def resolve_field(columns, field_name, fallbacks):
 
 
 def make_splits(dataset, seed: int):
+    if isinstance(dataset, dict):
+        if "train" in dataset and "validation" in dataset and "test" in dataset:
+            return dataset["train"], dataset["validation"], dataset["test"]
+
+        if "train" in dataset and "test" in dataset:
+            split = dataset["train"].train_test_split(test_size=0.2, seed=seed)
+            val_test = split["test"].train_test_split(test_size=0.5, seed=seed)
+            return split["train"], val_test["train"], val_test["test"]
+
+        base_split = dataset.get("train") or dataset[next(iter(dataset.keys()))]
+        split = base_split.train_test_split(test_size=0.2, seed=seed)
+        val_test = split["test"].train_test_split(test_size=0.5, seed=seed)
+        return split["train"], val_test["train"], val_test["test"]
+
     if "train" in dataset and "validation" in dataset and "test" in dataset:
         return dataset["train"], dataset["validation"], dataset["test"]
 
