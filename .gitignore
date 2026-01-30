@@ -11,6 +11,6 @@ env/
 Thumbs.db
 *.log
 data/
-datasets/
+!data/tracked/
 outputs/
 models/
