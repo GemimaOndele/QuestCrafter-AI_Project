@@ -17,4 +17,6 @@ models/
 !data/tracked/
 *.zip
 .questcrafter/
-dataset/
+dataset/*
+!dataset/sample/
+!dataset/sample/**
