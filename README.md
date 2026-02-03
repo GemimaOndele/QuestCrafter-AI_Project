@@ -46,3 +46,20 @@ Override with:
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
+
+## Upload dataset to Hugging Face
+Use the script below to upload `archive.zip` to your dataset repo.
+
+1) Install deps:
+`pip install -r requirements.txt`
+
+2) Upload (choose one):
+
+- With token env:
+`set HF_TOKEN=your_token`
+`python upload_to_hf.py --repo_id GemimaOndele/questcrafter-dataset --file "C:\Users\gemim\OneDrive\Bureau\M1-cours-Data engineer\MSC 1 AI\Semestre 2\Foundations of machine learning and datascience\Project\archive.zip"`
+
+- With token argument:
+`python upload_to_hf.py --token your_token --repo_id GemimaOndele/questcrafter-dataset --file "C:\Users\gemim\OneDrive\Bureau\M1-cours-Data engineer\MSC 1 AI\Semestre 2\Foundations of machine learning and datascience\Project\archive.zip"`
+
+If you already logged in with `huggingface-cli login`, the script will use that cached token.
