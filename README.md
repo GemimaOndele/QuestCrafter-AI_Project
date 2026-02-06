@@ -52,6 +52,10 @@ Example:
 Optional control fields (W4, if used):
 `python scripts/prepare_training_data.py --input_dir data/raw --dataset redditjokes --output_dir data/processed --control_keys level,setting,tone`
 
+## Evaluation scaffold (W4)
+Compute simple lexical metrics for generated outputs:
+`python scripts/evaluate_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --report outputs/metrics.json`
+
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
