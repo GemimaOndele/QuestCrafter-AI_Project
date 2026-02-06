@@ -59,6 +59,9 @@ Optional control fields (W4, if used):
 Compute simple lexical metrics for generated outputs:
 `python scripts/evaluate_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --report outputs/metrics.json`
 
+Compare baseline vs tuned (top-N by length delta):
+`python scripts/compare_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output outputs/compare_outputs.csv --top_n 20`
+
 ## Human rubric (W4)
 Rubric template: `docs/human_rubric.md`
 
