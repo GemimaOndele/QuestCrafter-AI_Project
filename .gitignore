@@ -20,3 +20,4 @@ models/
 dataset/*
 !dataset/sample/
 !dataset/sample/**
+!dataset/tinystories-narrative-classification-metadata.json
