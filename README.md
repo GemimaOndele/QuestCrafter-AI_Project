@@ -43,6 +43,15 @@ Each line has:
 Override with:
 `--min_prompt_chars`, `--max_prompt_chars`, `--min_response_chars`, `--max_response_chars`, `--keep_deleted`
 
+## Training-ready data (W3)
+Convert JSONL splits to a single `text` field for HF Trainer:
+
+Example:
+`python scripts/prepare_training_data.py --input_dir data/raw --dataset redditjokes --output_dir data/processed`
+
+Optional control fields (W4, if used):
+`python scripts/prepare_training_data.py --input_dir data/raw --dataset redditjokes --output_dir data/processed --control_keys level,setting,tone`
+
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
