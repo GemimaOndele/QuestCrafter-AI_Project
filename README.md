@@ -103,6 +103,9 @@ Build a CSV sheet to score baseline vs tuned:
 
 Notebook: `notebooks/human_eval.ipynb`
 
+Data volume note: human evaluation is more reliable with many scored prompts.
+Aim for dozens to hundreds of rows, and if possible multiple evaluators.
+
 ## Real baseline/tuned generation (W4)
 
 Generate outputs from a small model (baseline) or your tuned model:

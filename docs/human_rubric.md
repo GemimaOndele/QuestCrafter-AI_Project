@@ -22,3 +22,7 @@
 1) Compare baseline vs tuned for the same prompt.
 2) Score each response separately (or the better one in notes).
 3) Add short notes about strengths/weaknesses.
+
+### Data volume note
+Human evaluation is more reliable with many scored prompts. Aim for dozens to
+hundreds of rows, and if possible multiple evaluators to reduce bias.

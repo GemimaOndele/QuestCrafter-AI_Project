@@ -39,6 +39,7 @@ W4
 
 - `CTRL-1` Add control tokens or fields (level/setting/tone) (label: modeling)
 - `EVAL-3` Baseline vs fine-tuned evaluation report (label: evaluation)
+- `EVAL-4` Collect more evaluation data (scraping or manual) to improve reliability (label: evaluation)
 - `SAFE-1` Add basic safety/length filters (label: evaluation)
 
 W5

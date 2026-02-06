@@ -37,6 +37,7 @@ Use short, action-oriented messages:
 - Keep `data/raw/` and `data/processed/` ignored by git
 - Recompute dataset stats when splits change:
   `python scripts/compute_dataset_stats.py --input_dir data/raw --dataset tinystories --output docs/dataset_stats.md`
+- For evaluation, collect more data (scraping or manual) so the human rubric has enough rows.
 
 ## Pre-commit (anti gros fichiers)
 
