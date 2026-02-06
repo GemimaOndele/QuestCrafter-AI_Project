@@ -2,14 +2,7 @@ import argparse
 import json
 from pathlib import Path
 
-
-def load_jsonl(path: Path):
-    with path.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            line = line.strip()
-            if not line:
-                continue
-            yield json.loads(line)
+import datasets
 
 
 def write_jsonl(path: Path, records):
@@ -57,9 +50,10 @@ def to_training_record(record, args):
 
 
 def process_split(path: Path, args):
+    dataset = datasets.load_dataset("json", data_files=str(path), split="train")
     output = []
     dropped = 0
-    for record in load_jsonl(path):
+    for record in dataset:
         out = to_training_record(record, args)
         if out is None:
             dropped += 1

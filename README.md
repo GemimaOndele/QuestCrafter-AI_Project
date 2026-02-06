@@ -16,6 +16,7 @@ Gradio).
 - `scripts/` data and training scripts (W1 starts with `download_data.py`)
 - `models/` model checkpoints (later)
 - `docs/` project docs (board, roles)
+- `notebooks/` analysis notebooks
 
 ## Data pipeline (W1)
 We use the TinyStories dataset from Hugging Face. The script cleans, filters,
@@ -80,6 +81,9 @@ If prompts are empty (e.g. redditjokes), the script falls back to the `response`
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
+- Sample outputs: `docs/sample_outputs.md`
+- Project brief: `docs/source_project_brief.pdf`
+- Day 1 summary: `docs/source_day1_summary.pdf`
 
 ## Upload dataset to Hugging Face
 Use the script below to upload `archive.zip` to your dataset repo.
