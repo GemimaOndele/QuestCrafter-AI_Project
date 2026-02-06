@@ -36,6 +36,11 @@ def main():
         help="Field to read prompt from.",
     )
     parser.add_argument(
+        "--fallback_field",
+        default="response",
+        help="Fallback field if prompt is empty (use '' to disable).",
+    )
+    parser.add_argument(
         "--max_rows", type=int, default=200, help="Max prompts to generate."
     )
     parser.add_argument(
@@ -70,6 +75,9 @@ def main():
     outputs = []
     for record in records:
         prompt = record.get(args.prompt_field, "")
+        if not isinstance(prompt, str) or not prompt.strip():
+            fallback = args.fallback_field or ""
+            prompt = record.get(fallback, "") if fallback else ""
         if not isinstance(prompt, str) or not prompt.strip():
             continue
         result = generator(

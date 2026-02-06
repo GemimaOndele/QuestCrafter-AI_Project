@@ -67,6 +67,8 @@ Generate outputs from a small model (baseline) or your tuned model:
 `python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/baseline.jsonl --model_id distilgpt2`
 `python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/tuned.jsonl --model_id YOUR_TUNED_MODEL_ID`
 
+If prompts are empty (e.g. redditjokes), the script falls back to the `response` field.
+
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
