@@ -56,6 +56,17 @@ Optional control fields (W4, if used):
 Compute simple lexical metrics for generated outputs:
 `python scripts/evaluate_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --report outputs/metrics.json`
 
+## Human rubric (W4)
+Rubric template: `docs/human_rubric.md`
+
+Build a CSV sheet to score baseline vs tuned:
+`python scripts/build_human_eval_sheet.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output docs/human_eval_template.csv`
+
+## Real baseline/tuned generation (W4)
+Generate outputs from a small model (baseline) or your tuned model:
+`python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/baseline.jsonl --model_id distilgpt2`
+`python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/tuned.jsonl --model_id YOUR_TUNED_MODEL_ID`
+
 ## Team docs
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
