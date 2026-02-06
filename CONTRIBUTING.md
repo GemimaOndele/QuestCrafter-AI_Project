@@ -29,3 +29,12 @@ Use short, action-oriented messages:
 ### Data files
 - Do not commit large raw datasets
 - Keep `data/raw/` and `data/processed/` ignored by git
+
+### Pre-commit (anti gros fichiers)
+This repo ships a local hook to block large files in commits.
+
+Enable it once:
+- `git config core.hooksPath .githooks`
+
+Adjust the size limit (MB) if needed:
+- `MAX_FILE_SIZE_MB=100 git commit -m "..."` (default 100 MB)

@@ -16,3 +16,7 @@ outputs/
 models/
 !data/tracked/
 *.zip
+.questcrafter/
+dataset/*
+!dataset/sample/
+!dataset/sample/**

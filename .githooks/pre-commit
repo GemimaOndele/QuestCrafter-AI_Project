@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+if command -v python3 >/dev/null 2>&1; then
+  python3 scripts/check_large_files.py
+else
+  python scripts/check_large_files.py
+fi
