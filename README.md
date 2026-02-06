@@ -18,15 +18,18 @@ Gradio).
 - `docs/` project docs (board, roles)
 
 ## Data pipeline (W1)
-We use the Reddit Jokes dataset (CSV). The script cleans, filters, splits, and
-exports JSONL files with a consistent schema.
+We use the TinyStories dataset from Hugging Face. The script cleans, filters,
+splits, and exports JSONL files with a consistent schema.
 
 ### Download + preprocess
 Example:
-`python download_data.py --dataset redditjokes --local_csv path/to/reddit_jokes.csv`
+`python download_data.py --dataset tinystories`
+
+If you use local CSVs:
+`python download_data.py --dataset tinystories --local_csv path/to/train.csv`
 
 Output:
-`data/raw/redditjokes/train.jsonl`, `val.jsonl`, `test.jsonl`
+`data/raw/tinystories/train.jsonl`, `val.jsonl`, `test.jsonl`
 
 ### JSONL schema
 Each line has:
@@ -47,10 +50,10 @@ Override with:
 Convert JSONL splits to a single `text` field for HF Trainer:
 
 Example:
-`python scripts/prepare_training_data.py --input_dir data/raw --dataset redditjokes --output_dir data/processed`
+`python scripts/prepare_training_data.py --input_dir data/raw --dataset tinystories --output_dir data/processed`
 
 Optional control fields (W4, if used):
-`python scripts/prepare_training_data.py --input_dir data/raw --dataset redditjokes --output_dir data/processed --control_keys level,setting,tone`
+`python scripts/prepare_training_data.py --input_dir data/raw --dataset tinystories --output_dir data/processed --control_keys level,setting,tone`
 
 ## Evaluation scaffold (W4)
 Compute simple lexical metrics for generated outputs:
@@ -62,10 +65,12 @@ Rubric template: `docs/human_rubric.md`
 Build a CSV sheet to score baseline vs tuned:
 `python scripts/build_human_eval_sheet.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output docs/human_eval_template.csv`
 
+Notebook: `notebooks/human_eval.ipynb`
+
 ## Real baseline/tuned generation (W4)
 Generate outputs from a small model (baseline) or your tuned model:
-`python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/baseline.jsonl --model_id distilgpt2`
-`python scripts/generate_outputs.py --input data/raw/redditjokes/test.jsonl --output outputs/tuned.jsonl --model_id YOUR_TUNED_MODEL_ID`
+`python scripts/generate_outputs.py --input data/raw/tinystories/test.jsonl --output outputs/baseline.jsonl --model_id distilgpt2`
+`python scripts/generate_outputs.py --input data/raw/tinystories/test.jsonl --output outputs/tuned.jsonl --model_id YOUR_TUNED_MODEL_ID`
 
 If prompts are empty (e.g. redditjokes), the script falls back to the `response` field.
 

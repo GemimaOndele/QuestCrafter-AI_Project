@@ -153,7 +153,7 @@ def main() -> None:
     parser.add_argument(
         "--dataset",
         choices=DATASET_CONFIGS.keys(),
-        default="redditjokes",
+        default="tinystories",
         help="Dataset source to download from Hugging Face or local CSV.",
     )
     parser.add_argument(
@@ -220,22 +220,25 @@ def main() -> None:
     args = parser.parse_args()
 
     config = DATASET_CONFIGS[args.dataset]
-    if config["hf_id"]:
-        dataset = datasets.load_dataset(config["hf_id"])
-    else:
-        if not args.local_csv:
-            raise ValueError("For redditjokes, you must provide --local_csv.")
+    if args.local_csv:
         csv_path = Path(args.local_csv)
         if not csv_path.exists():
             raise FileNotFoundError(f"CSV not found: {csv_path}")
         dataset = datasets.load_dataset("csv", data_files=str(csv_path))
+    elif config["hf_id"]:
+        dataset = datasets.load_dataset(config["hf_id"])
+    else:
+        raise ValueError("For redditjokes, you must provide --local_csv.")
 
     columns = get_columns(dataset)
-    prompt_field = resolve_field(
-        columns,
-        args.prompt_field or config["prompt_field"],
-        ["prompt", "title", "question", "setup", "context"],
-    )
+    if args.prompt_field is None and config["prompt_field"] is None:
+        prompt_field = None
+    else:
+        prompt_field = resolve_field(
+            columns,
+            args.prompt_field or config["prompt_field"],
+            ["prompt", "title", "question", "setup", "context"],
+        )
     response_field = resolve_field(
         columns,
         args.response_field or config["response_field"],
