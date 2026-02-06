@@ -1,16 +1,8 @@
 import argparse
 import csv
-import json
 from pathlib import Path
 
-
-def load_jsonl(path: Path):
-    with path.open("r", encoding="utf-8") as handle:
-        for line in handle:
-            line = line.strip()
-            if not line:
-                continue
-            yield json.loads(line)
+from jsonl_utils import load_jsonl
 
 
 def main():

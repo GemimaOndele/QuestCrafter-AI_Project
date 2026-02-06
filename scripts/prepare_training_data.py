@@ -1,16 +1,9 @@
 import argparse
-import json
 from pathlib import Path
 
 import datasets
 
-
-def write_jsonl(path: Path, records):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("w", encoding="utf-8") as handle:
-        for record in records:
-            handle.write(json.dumps(record, ensure_ascii=False) + "\n")
-
+from jsonl_utils import write_jsonl
 
 def build_control_prefix(record, control_keys, control_format, drop_missing):
     if not control_keys:
