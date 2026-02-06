@@ -1,6 +1,7 @@
-## Contribution guidelines
+# Contribution guidelines
 
-### Branching
+## Branching
+
 - Base branch: `main`
 - Work on short-lived branches using prefixes:
   - `feat/` for features
@@ -8,7 +9,8 @@
   - `docs/` for documentation
 - Example: `feat/data-pipeline`, `docs/board`
 
-### Workflow
+## Workflow
+
 1) Create an issue and assign yourself
 2) Create a branch from `main`
 3) Push commits to your branch
@@ -16,25 +18,34 @@
 5) Request review from at least one teammate
 6) Merge after approval
 
-### Commit messages
+## Commit messages
+
 Use short, action-oriented messages:
-- `add data filters for reddit jokes`
+
+- `add data filters for tinystories`
 - `update README with pipeline steps`
 
-### Code style
+## Code style
+
 - Keep functions small and readable
 - Use explicit variable names
 - Add comments only when needed to explain non-obvious logic
 
-### Data files
+## Data files
+
 - Do not commit large raw datasets
 - Keep `data/raw/` and `data/processed/` ignored by git
+- Recompute dataset stats when splits change:
+  `python scripts/compute_dataset_stats.py --input_dir data/raw --dataset tinystories --output docs/dataset_stats.md`
 
-### Pre-commit (anti gros fichiers)
+## Pre-commit (anti gros fichiers)
+
 This repo ships a local hook to block large files in commits.
 
 Enable it once:
+
 - `git config core.hooksPath .githooks`
 
 Adjust the size limit (MB) if needed:
+
 - `MAX_FILE_SIZE_MB=100 git commit -m "..."` (default 100 MB)

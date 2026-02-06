@@ -66,7 +66,7 @@ def main():
     )
     parser.add_argument(
         "--dataset",
-        default="redditjokes",
+        default="tinystories",
         help="Dataset subfolder name under input_dir/output_dir.",
     )
     parser.add_argument(
