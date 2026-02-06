@@ -104,12 +104,48 @@ def normalize_records(dataset, prompt_field, response_field, source_name, includ
             for key in ("score", "author", "id", "subreddit"):
                 if key in example and example[key] not in (None, ""):
                     metadata[key] = example[key]
-            if metadata:
-                record["metadata"] = metadata
+            record["metadata"] = metadata
 
         return record
 
     return dataset.map(_map, remove_columns=dataset.column_names)
+
+
+def validate_schema(splits, include_metadata, sample_rows):
+    split_names = ["train", "validation", "test"]
+    expected_columns = None
+
+    for name, split in zip(split_names, splits):
+        columns = list(split.column_names)
+        if expected_columns is None:
+            expected_columns = columns
+        elif columns != expected_columns:
+            raise ValueError(
+                f"Inconsistent columns for {name}: {columns} vs {expected_columns}"
+            )
+
+    if include_metadata and "metadata" not in expected_columns:
+        raise ValueError("Missing 'metadata' column while include_metadata=True.")
+
+    if sample_rows <= 0:
+        return
+
+    for name, split in zip(split_names, splits):
+        limit = min(sample_rows, split.num_rows)
+        if limit == 0:
+            raise ValueError(f"Empty split detected: {name}")
+        subset = split.select(range(limit))
+        for record in subset:
+            if not isinstance(record.get("prompt"), str):
+                raise ValueError(f"Non-string prompt in {name}")
+            if not isinstance(record.get("response"), str):
+                raise ValueError(f"Non-string response in {name}")
+            if not isinstance(record.get("source"), str):
+                raise ValueError(f"Non-string source in {name}")
+            if include_metadata:
+                metadata = record.get("metadata")
+                if metadata is not None and not isinstance(metadata, dict):
+                    raise ValueError(f"Invalid metadata type in {name}")
 
 
 def main() -> None:
@@ -174,6 +210,12 @@ def main() -> None:
         action="store_true",
         help="Disable metadata fields in JSONL output.",
     )
+    parser.add_argument(
+        "--validate_rows",
+        type=int,
+        default=1000,
+        help="Number of rows per split to validate (0 to skip).",
+    )
     parser.add_argument("--seed", type=int, default=42, help="Random seed for splits.")
     args = parser.parse_args()
 
@@ -231,6 +273,8 @@ def main() -> None:
     train = normalize_records(train, prompt_field, response_field, args.dataset, include_metadata)
     val = normalize_records(val, prompt_field, response_field, args.dataset, include_metadata)
     test = normalize_records(test, prompt_field, response_field, args.dataset, include_metadata)
+
+    validate_schema((train, val, test), include_metadata, args.validate_rows)
 
     output_dir = Path(args.output_dir) / args.dataset
     ensure_dir(output_dir)
