@@ -18,8 +18,11 @@ Gradio).
 - `docs/` project docs (board, roles)
 
 ## Data pipeline (W1)
-We use the Reddit Jokes dataset (CSV). The script cleans, filters, splits, and
-exports JSONL files with a consistent schema.
+We filtered TinyStories to remove extremely short, overly long, and repetitive samples. Only stories between 50 and 300 tokens were kept, ensuring each example contains meaningful narrative structure while remaining efficient for training and evaluation.
+
+We use the TinyStories dataset, filtered for quality and formatted into
+instruction → response pairs. The dataset is split into train/validation/test
+(80/10/10) with a fixed random seed for reproducibility.
 
 ### Download + preprocess
 Example:
