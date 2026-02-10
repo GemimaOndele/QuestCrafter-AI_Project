@@ -24,6 +24,26 @@ We use the TinyStories dataset, filtered for quality and formatted into
 instruction → response pairs. The dataset is split into train/validation/test
 (80/10/10) with a fixed random seed for reproducibility.
 
+
+## Evaluation (W2)
+Model evaluation is performed using a fixed set of 50 quest prompts and a human
+scoring rubric to ensure fair comparison between baseline and fine-tuned models.
+
+### Test prompts
+A fixed prompt set covering multiple settings, difficulty levels (1–10), tones,
+and output lengths is stored in `evaluation/test_prompts.jsonl`. The same prompts
+are reused across all models for reproducibility.
+
+### Human rubric
+Generated quests are scored on a 1–5 scale using three criteria:
+- **Coherence**: Logical and well-structured narrative
+- **Prompt faithfulness**: Adherence to level, setting, and tone
+- **Creativity**: Originality and engaging content
+
+Human evaluation complements automatic metrics by capturing qualitative aspects
+of generation quality.
+
+
 ### Download + preprocess
 Example:
 `python download_data.py --dataset redditjokes --local_csv path/to/reddit_jokes.csv`
