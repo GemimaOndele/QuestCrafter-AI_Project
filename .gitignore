@@ -18,5 +18,7 @@ models/
 *.zip
 .questcrafter/
 dataset/*
+!dataset/README.md
 !dataset/sample/
 !dataset/sample/**
+!dataset/tinystories-narrative-classification-metadata.json
