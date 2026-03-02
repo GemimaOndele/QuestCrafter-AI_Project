@@ -156,8 +156,14 @@ evaluation.
 
 - Baseline: `training/baseline_generation.py`
 - Fine‑tuning: `training/train_model.py`
-- Outputs: `outputs/baseline.jsonl`, `outputs/finetuned.jsonl`,
-  `outputs/baseline_test.jsonl`
+- Failure modes: `docs/failure_modes.md`
+- Outputs: `outputs/baseline_generations.jsonl`,
+  `outputs/finetuned_generations.jsonl`
+
+#### Fine-tuned model (HF)
+
+- **Model:** [Mr-MB/questcrafter-finetuned](https://huggingface.co/Mr-MB/questcrafter-finetuned)
+- **Base:** distilgpt2 — 3 epochs on TinyStories (386 samples)
 
 ---
 
@@ -206,15 +212,32 @@ Prepare training text:
 Optional control fields:
 `python scripts/prepare_training_data.py --input_dir data/raw --dataset tinystories --output_dir data/processed --control_keys level,setting,tone`
 
+### Fine-tuned model usage (HF)
+
+```python
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+model = GPT2LMHeadModel.from_pretrained("Mr-MB/questcrafter-finetuned")
+tokenizer = GPT2Tokenizer.from_pretrained("Mr-MB/questcrafter-finetuned")
+```
+
+### Evaluation outputs (W2–W3)
+
+Generated using the fixed prompt set (`evaluation/test_prompts.jsonl` on the
+evaluation branch, 50 prompts):
+
+- `outputs/baseline_generations.jsonl` — distilgpt2 baseline (50 outputs)
+- `outputs/finetuned_generations.jsonl` — fine‑tuned model (50 outputs)
+
 ---
 
 ## ✅ Evaluation (W4)
 
 Automatic metrics:
-`python scripts/evaluate_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --report outputs/metrics.json`
+`python scripts/evaluate_outputs.py --baseline outputs/baseline_generations.jsonl --tuned outputs/finetuned_generations.jsonl --report outputs/metrics.json`
 
 Compare baseline vs tuned:
-`python scripts/compare_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output outputs/compare_outputs.csv --top_n 20`
+`python scripts/compare_outputs.py --baseline outputs/baseline_generations.jsonl --tuned outputs/finetuned_generations.jsonl --output outputs/compare_outputs.csv --top_n 20`
 
 Human rubric:
 
@@ -235,6 +258,7 @@ Quick example (CSV row):
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
 - Sample outputs: `docs/sample_outputs.md`
+- Failure modes: `docs/failure_modes.md`
 - Project brief: `docs/source_project_brief.pdf`
 - Day 1 summary: `docs/source_day1_summary.pdf`
 
