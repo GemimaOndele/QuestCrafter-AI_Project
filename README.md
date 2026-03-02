@@ -21,6 +21,33 @@ Gradio).
 - `docs/` project docs (board, roles)
 - `notebooks/` analysis notebooks
 
+## Rapport de branche : `feat/training`
+
+Responsable : Mike-Brady Mbolim Mbock
+
+### Objectif
+
+Mettre à disposition les scripts de génération baseline et de fine-tuning,
+ainsi que des sorties d’exemple pour l’évaluation.
+
+### Architecture et flux
+
+1) **Baseline**
+   - Chargement de `distilgpt2`.
+   - Génération depuis les prompts (fallback sur `response` si prompt vide).
+2) **Fine-tuning**
+   - Préparation des textes (prompt + response).
+   - Entraînement via `Trainer` (HF Transformers).
+3) **Export des sorties**
+   - JSONL pour évaluation humaine/automatique.
+
+### Fichiers clés
+
+- Baseline : `training/baseline_generation.py`
+- Fine-tuning : `training/train_model.py`
+- Sorties d’exemple : `outputs/baseline.jsonl`, `outputs/finetuned.jsonl`,
+  `outputs/baseline_test.jsonl`
+
 ## Data pipeline (W1)
 
 We use the TinyStories dataset from Hugging Face. The script cleans, filters,
