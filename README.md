@@ -21,6 +21,54 @@ Gradio).
 - `docs/` project docs (board, roles)
 - `notebooks/` analysis notebooks
 
+## Rapport de branche : `feat/data_pipeline`
+
+Responsable : Gémima ONDELE POUROU
+
+### Objectif
+
+Mettre en place un pipeline de données complet pour TinyStories, depuis
+l’ingestion jusqu’à l’export en JSONL, avec validation de schéma, statistiques
+et documentation associée.
+
+### Architecture et flux
+
+1) **Ingestion + nettoyage**
+   - Source principale : TinyStories (Hugging Face).
+   - Filtrage par longueur et suppression des entrées invalides.
+2) **Normalisation**
+   - Schéma uniforme : `prompt`, `response`, `source`, `metadata` optionnel.
+3) **Découpage**
+   - Splits `train/val/test` reproductibles.
+4) **Contrôles qualité**
+   - Validation de schéma et types.
+   - Seuils QA documentés (50–300 tokens).
+5) **Export**
+   - JSONL propre dans `data/raw/tinystories/`.
+6) **Statistiques**
+   - Script dédié et rapport Markdown.
+
+### Fichiers clés
+
+- Pipeline : `download_data.py`
+- Stats : `scripts/compute_dataset_stats.py` -> `docs/dataset_stats.md`
+- Préparation training : `scripts/prepare_training_data.py`
+- Utilitaires JSONL : `scripts/jsonl_utils.py`
+- Notebooks : `notebooks/human_eval.ipynb`
+
+### Sorties livrées
+
+- Splits JSONL : `data/raw/tinystories/{train,val,test}.jsonl`
+- Rapport stats : `docs/dataset_stats.md`
+- Rubrique humaine : `docs/human_rubric.md`
+- Template d’évaluation : `docs/human_eval_template.csv`
+
+### Documentation et structure
+
+- READMEs dédiés : `docs/README.md`, `scripts/README.md`,
+  `notebooks/README.md`, `dataset/README.md`
+- Nettoyage des dossiers et organisation des assets (`docs/assets/`)
+
 ## Data pipeline (W1)
 
 We use the TinyStories dataset from Hugging Face. The script cleans, filters,
