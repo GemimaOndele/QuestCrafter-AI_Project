@@ -2,3 +2,5 @@ datasets
 huggingface_hub
 pandas 
 matplotlib
+transformers
+accelerate>=0.26.0
