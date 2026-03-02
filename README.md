@@ -21,31 +21,31 @@ Gradio).
 - `docs/` project docs (board, roles)
 - `notebooks/` analysis notebooks
 
-## Rapport de branche : `feat/training`
+## Branch report: `feat/training`
 
-Responsable : Mike-Brady Mbolim Mbock
+Owner: Mike-Brady Mbolim Mbock
 
-### Objectif
+### Goal
 
-Mettre à disposition les scripts de génération baseline et de fine-tuning,
-ainsi que des sorties d’exemple pour l’évaluation.
+Provide baseline generation and fine-tuning scripts, plus example outputs for
+evaluation.
 
-### Architecture et flux
+### Architecture and flow
 
 1) **Baseline**
-   - Chargement de `distilgpt2`.
-   - Génération depuis les prompts (fallback sur `response` si prompt vide).
+   - Load `distilgpt2`.
+   - Generate from prompts (fallback to `response` if prompt is empty).
 2) **Fine-tuning**
-   - Préparation des textes (prompt + response).
-   - Entraînement via `Trainer` (HF Transformers).
-3) **Export des sorties**
-   - JSONL pour évaluation humaine/automatique.
+   - Build training texts (prompt + response).
+   - Train with `Trainer` (HF Transformers).
+3) **Export outputs**
+   - JSONL outputs for human/automatic evaluation.
 
-### Fichiers clés
+### Key files
 
-- Baseline : `training/baseline_generation.py`
-- Fine-tuning : `training/train_model.py`
-- Sorties d’exemple : `outputs/baseline.jsonl`, `outputs/finetuned.jsonl`,
+- Baseline: `training/baseline_generation.py`
+- Fine-tuning: `training/train_model.py`
+- Example outputs: `outputs/baseline.jsonl`, `outputs/finetuned.jsonl`,
   `outputs/baseline_test.jsonl`
 
 ## Data pipeline (W1)
