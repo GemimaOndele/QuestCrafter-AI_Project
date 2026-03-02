@@ -21,53 +21,52 @@ Gradio).
 - `docs/` project docs (board, roles)
 - `notebooks/` analysis notebooks
 
-## Rapport de branche : `feat/data_pipeline`
+## Branch report: `feat/data_pipeline`
 
-Responsable : Gémima ONDELE POUROU
+Owner: Gémima ONDELE POUROU
 
-### Objectif
+### Goal
 
-Mettre en place un pipeline de données complet pour TinyStories, depuis
-l’ingestion jusqu’à l’export en JSONL, avec validation de schéma, statistiques
-et documentation associée.
+Build a full TinyStories data pipeline, from ingestion to JSONL export, with
+schema validation, statistics, and documentation.
 
-### Architecture et flux
+### Architecture and flow
 
-1) **Ingestion + nettoyage**
-   - Source principale : TinyStories (Hugging Face).
-   - Filtrage par longueur et suppression des entrées invalides.
-2) **Normalisation**
-   - Schéma uniforme : `prompt`, `response`, `source`, `metadata` optionnel.
-3) **Découpage**
-   - Splits `train/val/test` reproductibles.
-4) **Contrôles qualité**
-   - Validation de schéma et types.
-   - Seuils QA documentés (50–300 tokens).
+1) **Ingestion + cleaning**
+   - Primary source: TinyStories (Hugging Face).
+   - Length filtering and invalid entry removal.
+2) **Normalization**
+   - Uniform schema: `prompt`, `response`, `source`, optional `metadata`.
+3) **Splitting**
+   - Reproducible `train/val/test` splits.
+4) **Quality checks**
+   - Schema and type validation.
+   - Documented QA thresholds (50–300 tokens).
 5) **Export**
-   - JSONL propre dans `data/raw/tinystories/`.
-6) **Statistiques**
-   - Script dédié et rapport Markdown.
+   - Clean JSONL in `data/raw/tinystories/`.
+6) **Statistics**
+   - Dedicated script and Markdown report.
 
-### Fichiers clés
+### Key files
 
-- Pipeline : `download_data.py`
-- Stats : `scripts/compute_dataset_stats.py` -> `docs/dataset_stats.md`
-- Préparation training : `scripts/prepare_training_data.py`
-- Utilitaires JSONL : `scripts/jsonl_utils.py`
-- Notebooks : `notebooks/human_eval.ipynb`
+- Pipeline: `download_data.py`
+- Stats: `scripts/compute_dataset_stats.py` -> `docs/dataset_stats.md`
+- Training prep: `scripts/prepare_training_data.py`
+- JSONL helpers: `scripts/jsonl_utils.py`
+- Notebook: `notebooks/human_eval.ipynb`
 
-### Sorties livrées
+### Outputs
 
-- Splits JSONL : `data/raw/tinystories/{train,val,test}.jsonl`
-- Rapport stats : `docs/dataset_stats.md`
-- Rubrique humaine : `docs/human_rubric.md`
-- Template d’évaluation : `docs/human_eval_template.csv`
+- JSONL splits: `data/raw/tinystories/{train,val,test}.jsonl`
+- Stats report: `docs/dataset_stats.md`
+- Human rubric: `docs/human_rubric.md`
+- Evaluation template: `docs/human_eval_template.csv`
 
-### Documentation et structure
+### Documentation and structure
 
-- READMEs dédiés : `docs/README.md`, `scripts/README.md`,
+- Folder READMEs: `docs/README.md`, `scripts/README.md`,
   `notebooks/README.md`, `dataset/README.md`
-- Nettoyage des dossiers et organisation des assets (`docs/assets/`)
+- Asset organization under `docs/assets/`
 
 ## Data pipeline (W1)
 
