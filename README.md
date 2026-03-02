@@ -166,3 +166,22 @@ Use the script below to upload `archive.zip` to your dataset repo.
 `python upload_to_hf.py --token your_token --repo_id GemimaOndele/questcrafter-dataset --file "C:\Users\gemim\OneDrive\Bureau\M1-cours-Data engineer\MSC 1 AI\Semestre 2\Foundations of machine learning and datascience\Project\archive.zip"`
 
 If you already logged in with `huggingface-cli login`, the script will use that cached token.
+
+
+## Fine-tuned Model
+
+The fine-tuned QuestCrafter model is published on Hugging Face:
+
+- **Model:** https://huggingface.co/Mr-MB/questcrafter-finetuned
+- **Base:** distilgpt2 — 3 epochs on TinyStories (386 samples)
+
+```python
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+model = GPT2LMHeadModel.from_pretrained("Mr-MB/questcrafter-finetuned")
+tokenizer = GPT2Tokenizer.from_pretrained("Mr-MB/questcrafter-finetuned")
+Evaluation Outputs (W2-W3)
+Generated using evaluation/test_prompts.jsonl (50 fixed quest prompts):
+
+outputs/baseline_generations.jsonl — distilgpt2 baseline (50 outputs)
+
+outputs/finetuned_generations.jsonl — fine-tuned model (50 outputs)
