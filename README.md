@@ -34,8 +34,8 @@ and automatic evaluation, and a demo (Streamlit/Gradio).
 
 ## 👥 Contributors
 
-- **Gemima Ondele** — data lead (`feat/data-pipeline`)
-- **Kachallah Fatima** — evaluation lead (`feat/evaluation`)
+- **Gemima ONDELE POUROU** — data lead (`feat/data-pipeline`)
+- **Fatima KACHALLAH** — evaluation lead (`feat/evaluation`)
 - **Mike‑Brady Mbolim Mbock** — modeling lead (`feat/training`)
 - **Joseph Fabrice TSAPFACK** — demo lead (`feat/demo`)
 
