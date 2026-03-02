@@ -1,120 +1,236 @@
-# QuestCrafter-AI_Project
+# 🧭 QuestCrafter‑AI Project (✨ Full Project Report)
 
-QuestCrafter is a lightweight generative AI project that builds a "Dungeon Master"
-for RPG quests. It fine-tunes a small language model on curated prompt-to-quest
-data, compares baseline vs fine-tuned outputs, evaluates quality with automatic
-metrics and a human rubric, and delivers a simple interactive demo (Streamlit or
-Gradio).
+[![Status](https://img.shields.io/badge/status-active-brightgreen.svg)](https://github.com/GemimaOndele/QuestCrafter-AI_Project)
+[![Python](https://img.shields.io/badge/python-3.10+-blue.svg)](https://github.com/GemimaOndele/QuestCrafter-AI_Project)
+[![Data](https://img.shields.io/badge/dataset-TinyStories-orange.svg)](https://github.com/GemimaOndele/QuestCrafter-AI_Project)
+[![Branch](https://img.shields.io/badge/branches-data%20%7C%20training%20%7C%20evaluation%20%7C%20demo-purple.svg)](https://github.com/GemimaOndele/QuestCrafter-AI_Project)
 
-## Setup
+QuestCrafter is a lightweight generative AI project that builds a **“Dungeon Master”**
+for RPG quests. The project delivers a complete pipeline: data ingestion and
+cleaning, training‑ready formatting, baseline vs fine‑tuning generation, human
+and automatic evaluation, and a demo (Streamlit/Gradio).
 
-- Python 3.10+
-- Create a virtual env and install dependencies:
-  - `pip install -r requirements.txt`
+```text
+  🧱  DATA  ──▶  🧠  MODEL  ──▶  ✅  EVAL  ──▶  🎛️  DEMO
+  clean/split      baseline+FT     rubric+plots     UI app
+```
 
-## Repository structure (W1)
+---
 
-- `data/` raw and processed datasets
-- `dataset/` small tracked samples and metadata
-- `scripts/` data and training scripts (W1 starts with `download_data.py`)
-- `models/` model checkpoints (later)
-- `docs/` project docs (board, roles)
-- `notebooks/` analysis notebooks
+## 📌 Table of Contents
 
-## Data pipeline (W1)
+- Contributors
+- Project Snapshot
+- Architecture Map
+- Repository Structure
+- Branch Reports (Owners)
+- Data Pipeline (W1)
+- Training (W3)
+- Evaluation (W4)
+- Team Docs
+- Setup
 
-We use the TinyStories dataset from Hugging Face. The script cleans, filters,
-splits, and exports JSONL files with a consistent schema.
+---
 
-### Download + preprocess
+## 👥 Contributors
 
-Example:
+- **Gemima Ondele** — data lead (`feat/data-pipeline`)
+- **Kachallah Fatima** — evaluation lead (`feat/evaluation`)
+- **Mike‑Brady Mbolim Mbock** — modeling lead (`feat/training`)
+- **Joseph Fabrice TSAPFACK** — demo lead (`feat/demo`)
+
+---
+
+## 🎯 Project Goals
+
+| Goal | Description |
+| --- | --- |
+| Data quality | Filter and split TinyStories with clear QA thresholds |
+| Modeling | Baseline generation + fine‑tuning with HF Transformers |
+| Evaluation | Human rubric + automatic metrics |
+| Delivery | Clear docs + demo app |
+
+---
+
+## 🧩 Project Snapshot
+
+| Layer | Goal | Key Outputs |
+| --- | --- | --- |
+| 🧱 Data | Clean + split TinyStories | JSONL splits + stats |
+| 🧠 Modeling | Baseline + fine‑tune | `distilgpt2` outputs |
+| ✅ Evaluation | Human + metrics | Rubric, plots, reports |
+| 🎛️ Demo | Interactive app | Streamlit/Gradio UI |
+
+---
+
+## 🗺️ Architecture Map
+
+```text
+flowchart LR
+    A[TinyStories\n(HF dataset)] --> B[download_data.py\nclean + split]
+    B --> C[data/raw/tinystories\ntrain/val/test.jsonl]
+    C --> D[prepare_training_data.py\ntraining-ready text]
+    D --> E[training/train_model.py\nfine-tune]
+    C --> F[training/baseline_generation.py\nbaseline outputs]
+    F --> G[outputs/*.jsonl]
+    E --> G
+    G --> H[docs/human_eval_template.csv]
+    H --> I[notebooks/human_eval.ipynb\nanalysis + plots]
+```
+
+---
+
+## 📁 Repository Structure
+
+| Folder | Purpose |
+| --- | --- |
+| `data/` | Raw + processed datasets (ignored by git) |
+| `dataset/` | Small tracked samples and metadata |
+| `scripts/` | Data, evaluation, and utility scripts |
+| `training/` | Baseline + fine‑tuning scripts |
+| `outputs/` | Example generation outputs |
+| `docs/` | Project docs, reports, assets |
+| `notebooks/` | Analysis notebooks |
+
+---
+
+## 🧾 Branch Reports (Owners)
+
+### `feat/data_pipeline` — **Gemima Ondele**
+
+#### Goal (Data Pipeline)
+
+Build a full TinyStories data pipeline, from ingestion to JSONL export, with
+schema validation, statistics, and documentation.
+
+#### Architecture & Flow (Data Pipeline)
+
+1) **Ingestion + cleaning**  
+   - Primary source: TinyStories (Hugging Face).
+   - Length filtering and invalid entry removal.
+2) **Normalization**  
+   - Uniform schema: `prompt`, `response`, `source`, optional `metadata`.
+3) **Splitting**  
+   - Reproducible `train/val/test` splits.
+4) **Quality checks**  
+   - Schema and type validation.
+   - Documented QA thresholds (50–300 tokens).
+5) **Export + stats**  
+   - JSONL splits + Markdown stats report.
+
+#### Key files (Data Pipeline)
+
+- Pipeline: `download_data.py`
+- Stats: `scripts/compute_dataset_stats.py` → `docs/dataset_stats.md`
+- Training prep: `scripts/prepare_training_data.py`
+- JSONL helpers: `scripts/jsonl_utils.py`
+
+#### Outputs (Data Pipeline)
+
+- `data/raw/tinystories/{train,val,test}.jsonl`
+- `docs/dataset_stats.md`
+- `docs/human_rubric.md`
+- `docs/human_eval_template.csv`
+
+---
+
+### `feat/training` — **Mike‑Brady Mbolim Mbock**
+
+#### Goal (Training)
+
+Provide baseline generation and fine‑tuning scripts, plus example outputs for
+evaluation.
+
+#### Architecture & Flow (Training)
+
+1) **Baseline generation**  
+   - Load `distilgpt2`.
+   - Generate from prompts (fallback to `response` if prompt is empty).
+2) **Fine‑tuning**  
+   - Build training texts (prompt + response).
+   - Train with `Trainer` (HF Transformers).
+3) **Export outputs**  
+   - JSONL outputs for evaluation.
+
+#### Key files (Training)
+
+- Baseline: `training/baseline_generation.py`
+- Fine‑tuning: `training/train_model.py`
+- Outputs: `outputs/baseline.jsonl`, `outputs/finetuned.jsonl`,
+  `outputs/baseline_test.jsonl`
+
+---
+
+## 🧪 Data Pipeline (W1)
+
+**Dataset:** TinyStories (Hugging Face)  
+**Schema:** `prompt`, `response`, `source`, optional `metadata`
+
+### Example command
+
 `python download_data.py --dataset tinystories`
 
-If you use local CSVs:
-`python download_data.py --dataset tinystories --local_csv path/to/train.csv`
+Example summary (for reports):
+> We filtered TinyStories to remove extremely short, overly long, or repetitive
+> samples. Final stories range between **50–300 tokens**, ensuring concise but
+> coherent training examples.
 
-Output:
+### Outputs
+
 `data/raw/tinystories/train.jsonl`, `val.jsonl`, `test.jsonl`
 
-### JSONL schema
+### QA thresholds
 
-Each line has:
-
-- `prompt`
-- `response`
-- `source`
-- optional `metadata` (e.g., `score`, `author`)
-
-### Filters (defaults)
-
-- Prompt: 5 to 300 characters (if prompt exists)
-- Response: 20 to 800 characters
-- Drops `[deleted]` / `[removed]`
-
-Override with:
-`--min_prompt_chars`, `--max_prompt_chars`, `--min_response_chars`, `--max_response_chars`, `--keep_deleted`
-
-### TinyStories QA thresholds (report)
-
-We document the following filtering rules for TinyStories QA:
-
-- Keep stories between 50 and 300 tokens
+- Keep stories between **50 and 300 tokens**
 - Drop empty or malformed entries
-- Drop excessive repetition (same sentence 3+ times)
+- Drop excessive repetition (same sentence ≥ 3 times)
 
 ### Dataset stats (current splits)
 
-Quick stats computed on the current JSONL splits (`data/raw/tinystories`):
-
-- Train: 386 samples, avg 131.58 tokens, min 61, max 170
-- Validation: 48 samples, avg 130.15 tokens, min 82, max 156
-- Test: 49 samples, avg 131.90 tokens, min 79, max 157
-
-Full details: `docs/dataset_stats.md`
+| Split | Samples | Avg tokens | Min | Max |
+| --- | --- | --- | --- | --- |
+| Train | 386 | 131.58 | 61 | 170 |
+| Validation | 48 | 130.15 | 82 | 156 |
+| Test | 49 | 131.90 | 79 | 157 |
 
 Recompute:
 `python scripts/compute_dataset_stats.py --input_dir data/raw --dataset tinystories --output docs/dataset_stats.md`
 
-## Training-ready data (W3)
+---
 
-Convert JSONL splits to a single `text` field for HF Trainer:
+## 🧠 Training (W3)
 
-Example:
+Prepare training text:
 `python scripts/prepare_training_data.py --input_dir data/raw --dataset tinystories --output_dir data/processed`
 
-Optional control fields (W4, if used):
+Optional control fields:
 `python scripts/prepare_training_data.py --input_dir data/raw --dataset tinystories --output_dir data/processed --control_keys level,setting,tone`
 
-## Evaluation scaffold (W4)
+---
 
-Compute simple lexical metrics for generated outputs:
+## ✅ Evaluation (W4)
+
+Automatic metrics:
 `python scripts/evaluate_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --report outputs/metrics.json`
 
-Compare baseline vs tuned (top-N by length delta):
+Compare baseline vs tuned:
 `python scripts/compare_outputs.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output outputs/compare_outputs.csv --top_n 20`
 
-## Human rubric (W4)
+Human rubric:
 
-Rubric template: `docs/human_rubric.md`
+- Template: `docs/human_rubric.md`
+- CSV: `docs/human_eval_template.csv`
+- Notebook: `notebooks/human_eval.ipynb`
 
-Build a CSV sheet to score baseline vs tuned:
-`python scripts/build_human_eval_sheet.py --baseline outputs/baseline.jsonl --tuned outputs/tuned.jsonl --output docs/human_eval_template.csv`
+**Important:** human evaluation needs **lots of data**.  
+Aim for **dozens to hundreds of scored rows**, ideally with multiple evaluators.
 
-Notebook: `notebooks/human_eval.ipynb`
+Quick example (CSV row):
+`"prompt","baseline","tuned",3,4,3,4,"notes","evaluator","2026-02-06"`
 
-Data volume note: human evaluation is more reliable with many scored prompts.
-Aim for dozens to hundreds of rows, and if possible multiple evaluators.
+---
 
-## Real baseline/tuned generation (W4)
-
-Generate outputs from a small model (baseline) or your tuned model:
-`python scripts/generate_outputs.py --input data/raw/tinystories/test.jsonl --output outputs/baseline.jsonl --model_id distilgpt2`
-`python scripts/generate_outputs.py --input data/raw/tinystories/test.jsonl --output outputs/tuned.jsonl --model_id YOUR_TUNED_MODEL_ID`
-
-If prompts are empty, the script falls back to the `response` field.
-
-## Team docs
+## 📚 Team Docs
 
 - GitHub board and issues: `docs/github_board.md`
 - Roles, branches, and tasks: `docs/team_roles.md`
@@ -122,20 +238,9 @@ If prompts are empty, the script falls back to the `response` field.
 - Project brief: `docs/source_project_brief.pdf`
 - Day 1 summary: `docs/source_day1_summary.pdf`
 
-## Upload dataset to Hugging Face
+---
 
-Use the script below to upload `archive.zip` to your dataset repo.
+## 🛠️ Setup
 
-1) Install deps:
-`pip install -r requirements.txt`
-
-2) Upload (choose one):
-
-- With token env:
-`set HF_TOKEN=your_token`
-`python upload_to_hf.py --repo_id GemimaOndele/questcrafter-dataset --file "C:\Users\gemim\OneDrive\Bureau\M1-cours-Data engineer\MSC 1 AI\Semestre 2\Foundations of machine learning and datascience\Project\archive.zip"`
-
-- With token argument:
-`python upload_to_hf.py --token your_token --repo_id GemimaOndele/questcrafter-dataset --file "C:\Users\gemim\OneDrive\Bureau\M1-cours-Data engineer\MSC 1 AI\Semestre 2\Foundations of machine learning and datascience\Project\archive.zip"`
-
-If you already logged in with `huggingface-cli login`, the script will use that cached token.
+- Python 3.10+
+- `pip install -r requirements.txt`
