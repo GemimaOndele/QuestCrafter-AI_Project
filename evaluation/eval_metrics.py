@@ -42,8 +42,8 @@ def distinct_n(texts, n=1):
     return len(unique_ngrams) / total_ngrams
 
 if __name__ == "__main__":
-    baseline_texts = load_generations("evaluation/baseline_generations.jsonl")
-    finetuned_texts = load_generations("evaluation/finetuned_generations.jsonl")
+    baseline_texts = load_generations("evaluation/baseline_generations_v2.jsonl")
+    finetuned_texts = load_generations("evaluation/finetuned_generations_v2.jsonl")
 
     print("Baseline Distinct-1:", distinct_n(baseline_texts, n=1))
     print("Baseline Distinct-2:", distinct_n(baseline_texts, n=2))
