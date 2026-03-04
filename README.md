@@ -96,7 +96,7 @@ flowchart LR
 
 ## 🧾 Branch Reports (Owners)
 
-### `feat/data_pipeline` — **Gemima Ondele**
+### `feat/data_pipeline` — **Gemima ONDELE POUROU**
 
 #### Goal (Data Pipeline)
 
@@ -134,6 +134,30 @@ schema validation, statistics, and documentation.
 
 ---
 
+### `feat/evaluation` — **Fatima KACHALLAH**
+
+#### Goal (Evaluation)
+
+Compare baseline vs fine‑tuned generations using automatic metrics and a
+human‑scored rubric on a fixed prompt set.
+
+#### Artifacts (Evaluation)
+
+- Prompt set: `evaluation/test_prompts.jsonl` (50 fixed prompts)
+- Auto metrics: `evaluation/eval_metrics.py`
+- Human scores: `evaluation/scores.csv`
+- Generations: `evaluation/baseline_generations_v2.jsonl`,
+  `evaluation/finetuned_generations_v2.jsonl`
+
+#### Results snapshot (v2)
+
+| Model | Distinct-1 | Distinct-2 | Overall (Human) |
+| --- | --- | --- | --- |
+| Baseline | 0.355 | 0.889 | 1.90 |
+| Finetuned | 0.256 | 0.825 | 2.49 |
+
+---
+
 ### `feat/training` — **Mike‑Brady Mbolim Mbock**
 
 #### Goal (Training)
@@ -164,30 +188,6 @@ evaluation.
 
 - **Model:** [Mr-MB/questcrafter-finetuned](https://huggingface.co/Mr-MB/questcrafter-finetuned)
 - **Base:** distilgpt2 — 3 epochs on TinyStories (386 samples)
-
----
-
-### `feat/evaluation` — **Fatima KACHALLAH**
-
-#### Goal (Evaluation)
-
-Compare baseline vs fine‑tuned generations using automatic metrics and a
-human‑scored rubric on a fixed prompt set.
-
-#### Artifacts (Evaluation)
-
-- Prompt set: `evaluation/test_prompts.jsonl` (50 fixed prompts)
-- Auto metrics: `evaluation/eval_metrics.py`
-- Human scores: `evaluation/scores.csv`
-- Generations: `evaluation/baseline_generations_v2.jsonl`,
-  `evaluation/finetuned_generations_v2.jsonl`
-
-#### Results snapshot (v2)
-
-| Model | Distinct-1 | Distinct-2 | Overall (Human) |
-| --- | --- | --- | --- |
-| Baseline | 0.355 | 0.889 | 1.90 |
-| Finetuned | 0.256 | 0.825 | 2.49 |
 
 ---
 
