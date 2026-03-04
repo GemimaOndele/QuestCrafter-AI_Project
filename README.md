@@ -10,6 +10,10 @@ QuestCrafter is a lightweight generative AI system designed to function as a min
 - Python 3.10+
 - Virtual environment recommended
 
+Branch report: feat/evaluation
+Owner: Fatima KACHALLAH
+
+
 ### Installation
 
 ```bash
